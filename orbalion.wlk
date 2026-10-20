@@ -29,6 +29,10 @@ class Luminico inherits Equipo {
     }
   }
   
+  method esDePrestigioUniversal() = ((cristalesSolares.size() >= 3) && entrenador.esEliteGalactico()) && tecnologiasComplementarias.any(
+    { t => t.activa() }
+  )
+  
   method cristalesSolares() = cristalesSolares
   
   method nivelDeRadiacionCapturada() = nivelDeRadiacionCapturada
@@ -45,6 +49,10 @@ class Sintetico inherits Equipo {
   
   method estanVerificadosComoUnidadEstableDeCompeticion() = estanVerificadosComoUnidadEstableDeCompeticion
   
+  method esDePrestigioUniversal() = (estanVerificadosComoUnidadEstableDeCompeticion && (cantDeModulosActivos > 3)) && tecnologiasComplementarias.all(
+    { t => t.activa() }
+  )
+  
   override method energiaTotalCalculada() {
     if (cantDeModulosActivos > 5) {
       return super() * 0.8
@@ -59,6 +67,8 @@ class Eterico inherits Equipo {
   const cantDePortalesEnergeticosAbiertos
   
   method nivelDeFluctuacion() = nivelDeFluctuacion
+  
+  method esDePrestigioUniversal() = false
   
   method cantDePortalesEnergeticosAbiertos() = cantDePortalesEnergeticosAbiertos
 }

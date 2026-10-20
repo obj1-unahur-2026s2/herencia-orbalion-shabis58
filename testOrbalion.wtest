@@ -172,3 +172,116 @@ describe "Checkpoint 2" {
     assert.that(cristian.esEliteGalactico())
   }
 }
+
+describe "Chekpoint 3" {
+  test "Equipo lumínico con 3 cristales, entrenador de élite y una tecnología activa → es de prestigio universal" {
+    const cristian = new Entrenador(
+      edad = 28,
+      estaEnSintoniaConEquipo = true,
+      nivelDePrecisionEstrategica = 94
+    )
+    cristian.asignarRol("guiaMental")
+    
+    const armaDePulsares = new TecnologiaEspecial(
+      nombre = "Arma De Pulsares",
+      valorEnergetico = 600,
+      activa = true
+    )
+    
+    const equipoLuminico = new Luminico(
+      nombre = "Lumux",
+      nivelDeEnergiaBase = 3500,
+      entrenador = cristian,
+      tecnologiasComplementarias = #{armaDePulsares},
+      nivelDeRadiacionCapturada = 5100,
+      cristalesSolares = #{"lurge", "thorn", "mirax"}
+    )
+    
+    assert.that(equipoLuminico.esDePrestigioUniversal())
+  }
+  
+  test "Equipo sintético certificado con 4 módulos y todas las tecnologías activas → es de prestigio" {
+    const cristian = new Entrenador(
+      edad = 28,
+      estaEnSintoniaConEquipo = true,
+      nivelDePrecisionEstrategica = 94
+    )
+    
+    const armaDePulsares = new TecnologiaEspecial(
+      nombre = "Arma De Pulsares",
+      valorEnergetico = 600,
+      activa = true
+    )
+    
+    const nucleosGravitacionales = new TecnologiaEspecial(
+      nombre = "Nucleos Gravitacionales",
+      valorEnergetico = 230,
+      activa = true
+    )
+    
+    const interfacesDeProyeccionMental = new TecnologiaEspecial(
+      nombre = "Interfaces de proyección mental",
+      valorEnergetico = 350,
+      activa = true
+    )
+    
+    const camarasDeFusionEnergetica = new TecnologiaEspecial(
+      nombre = "Cámaras de fusión energética",
+      valorEnergetico = 420,
+      activa = true
+    )
+    
+    const equipoSintetico = new Sintetico(
+      nombre = "Sirtaxis",
+      nivelDeEnergiaBase = 3500,
+      entrenador = cristian,
+      tecnologiasComplementarias = #{armaDePulsares, nucleosGravitacionales},
+      nivelDeProcesamientoCentral = 3,
+      cantDeModulosActivos = 4,
+      estanVerificadosComoUnidadEstableDeCompeticion = true
+    )
+    assert.that(equipoSintetico.esDePrestigioUniversal())
+  }
+  
+  test "Casos negativos para verificar que no cumple las condiciones" {
+    const cristian = new Entrenador(
+      edad = 28,
+      estaEnSintoniaConEquipo = true,
+      nivelDePrecisionEstrategica = 94
+    )
+    
+    const armaDePulsares = new TecnologiaEspecial(
+      nombre = "Arma De Pulsares",
+      valorEnergetico = 600,
+      activa = false
+    )
+    
+    const nucleosGravitacionales = new TecnologiaEspecial(
+      nombre = "Nucleos Gravitacionales",
+      valorEnergetico = 230,
+      activa = false
+    )
+    
+    const interfacesDeProyeccionMental = new TecnologiaEspecial(
+      nombre = "Interfaces de proyección mental",
+      valorEnergetico = 350,
+      activa = false
+    )
+    
+    const camarasDeFusionEnergetica = new TecnologiaEspecial(
+      nombre = "Cámaras de fusión energética",
+      valorEnergetico = 420,
+      activa = false
+    )
+    const equipoEterico = new Eterico(
+      nombre = "Eternals",
+      nivelDeEnergiaBase = 3500,
+      entrenador = cristian,
+      tecnologiasComplementarias = #{armaDePulsares, nucleosGravitacionales},
+      nivelDeFluctuacion = 3,
+      cantDePortalesEnergeticosAbiertos = 4
+    )
+    
+    assert.that(equipoEterico.esDePrestigioUniversal())
+  }
+}
