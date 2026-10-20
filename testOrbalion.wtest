@@ -1,0 +1,139 @@
+import orbalion.*
+
+describe "Chekpoint 1" {
+  test "pepita" {
+    const pepita = new Entrenador(
+      edad = 20,
+      estaEnSintoniaConEquipo = false,
+      nivelDePrecisionEstrategica = 55
+    )
+    assert.equals(20, pepita.edad())
+    assert.equals(true, pepita.estaEnSintoniaConEquipo())
+  }
+  
+  test "Un entrenador no puede tener tener un rol distinto a los autorizados por la FOZ" {
+    const cristian = new Entrenador(
+      edad = 28,
+      estaEnSintoniaConEquipo = true,
+      nivelDePrecisionEstrategica = 94
+    )
+    cristian.asignarRol("profe")
+    assert.equals(28, cristian.edad())
+  }
+  
+  test "Un equipo lumínico con radiación > 5000 y sin tecnologías activas → su energía total es su energía base" {
+    const cristian = new Entrenador(
+      edad = 28,
+      estaEnSintoniaConEquipo = true,
+      nivelDePrecisionEstrategica = 94
+    )
+    
+    const armaDePulsares = new TecnologiaEspecial(
+      nombre = "Arma De Pulsares",
+      valorEnergetico = 600,
+      activa = true
+    )
+    const avengers = new Luminico(
+      nombre = "avengers",
+      nivelDeEnergiaBase = 3500,
+      entrenador = cristian,
+      tecnologiasComplementarias = #{},
+      nivelDeRadiacionCapturada = 5100,
+      cristalesSolares = #{"lurge"}
+    )
+    
+    assert.equals(3500, avengers.energiaTotalCalculada())
+  }
+  
+  test "Un equipo lumínico con radiación < 5000 → obtiene el bono del 10%" {
+    const cristian = new Entrenador(
+      edad = 28,
+      estaEnSintoniaConEquipo = true,
+      nivelDePrecisionEstrategica = 94
+    )
+    
+    const armaDePulsares = new TecnologiaEspecial(
+      nombre = "Arma De Pulsares",
+      valorEnergetico = 600,
+      activa = true
+    )
+    const avengers = new Luminico(
+      nombre = "avengers",
+      nivelDeEnergiaBase = 3500,
+      entrenador = cristian,
+      tecnologiasComplementarias = #{armaDePulsares},
+      nivelDeRadiacionCapturada = 4500,
+      cristalesSolares = #{"lurge"}
+    )
+    
+    assert.equals(4510, avengers.energiaTotalCalculada())
+  }
+  
+  test "Un equipo sintético con 6 módulos → aplica correctamente la penalización del 20%" {
+    const cristian = new Entrenador(
+      edad = 28,
+      estaEnSintoniaConEquipo = true,
+      nivelDePrecisionEstrategica = 94
+    )
+    
+    const armaDePulsares = new TecnologiaEspecial(
+      nombre = "Arma De Pulsares",
+      valorEnergetico = 600,
+      activa = true
+    )
+    const avengers = new Sintetico(
+      nombre = "avengers",
+      nivelDeEnergiaBase = 3500,
+      entrenador = cristian,
+      tecnologiasComplementarias = #{armaDePulsares},
+      nivelDeProcesamientoCentral = 3,
+      cantDeModulosActivos = 6,
+      estanVerificadosComoUnidadEstableDeCompeticion = true
+    )
+    
+    assert.equals(3280, avengers.energiaTotalCalculada())
+  }
+  
+  test "Un equipo sintético con 4 módulos y 2 tecnologías complementarias → suma correctamente los valores energéticos" {
+    const cristian = new Entrenador(
+      edad = 28,
+      estaEnSintoniaConEquipo = true,
+      nivelDePrecisionEstrategica = 94
+    )
+    
+    const armaDePulsares = new TecnologiaEspecial(
+      nombre = "Arma De Pulsares",
+      valorEnergetico = 600,
+      activa = false
+    )
+    
+    const nucleosGravitacionales = new TecnologiaEspecial(
+      nombre = "Nucleos Gravitacionales",
+      valorEnergetico = 230,
+      activa = false
+    )
+    
+    const interfacesDeProyeccionMental = new TecnologiaEspecial(
+      nombre = "Interfaces de proyección mental",
+      valorEnergetico = 350,
+      activa = false
+    )
+    
+    const camarasDeFusionEnergetica = new TecnologiaEspecial(
+      nombre = "Cámaras de fusión energética",
+      valorEnergetico = 420,
+      activa = false
+    )
+    const avengers = new Sintetico(
+      nombre = "Avengers",
+      nivelDeEnergiaBase = 3500,
+      entrenador = cristian,
+      tecnologiasComplementarias = #{armaDePulsares, nucleosGravitacionales},
+      nivelDeProcesamientoCentral = 3,
+      cantDeModulosActivos = 4,
+      estanVerificadosComoUnidadEstableDeCompeticion = true
+    )
+    
+    assert.equals(3500, avengers.energiaTotalCalculada())
+  }
+}
