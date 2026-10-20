@@ -1,6 +1,6 @@
 import orbalion.*
 
-describe "Chekpoint 1" {
+describe "Checkpoint 1" {
   test "pepita" {
     const pepita = new Entrenador(
       edad = 20,
@@ -135,5 +135,40 @@ describe "Chekpoint 1" {
     )
     
     assert.equals(3500, avengers.energiaTotalCalculada())
+  }
+}
+
+describe "Checkpoint 2" {
+  test "Estratega cuántico con 12 ciclos y precisión 90 → es de élite galáctica" {
+    const cristian = new Entrenador(
+      edad = 12,
+      estaEnSintoniaConEquipo = true,
+      nivelDePrecisionEstrategica = 90
+    )
+    cristian.asignarRol("estrategaCuantico")
+    
+    assert.that(cristian.esEliteGalactico())
+  }
+  
+  test "Arquitecto de energía con 11 ciclos pero sin sintonía → no es de élite." {
+    const cristian = new Entrenador(
+      edad = 11,
+      estaEnSintoniaConEquipo = false,
+      nivelDePrecisionEstrategica = 90
+    )
+    cristian.asignarRol("arquitectoDeEnergia")
+    
+    assert.that(cristian.esEliteGalactico())
+  }
+  
+  test "Guía mental con 15 ciclos → siempre es de élite." {
+    const cristian = new Entrenador(
+      edad = 15,
+      estaEnSintoniaConEquipo = false,
+      nivelDePrecisionEstrategica = 90
+    )
+    cristian.asignarRol("guiaMental")
+    
+    assert.that(cristian.esEliteGalactico())
   }
 }

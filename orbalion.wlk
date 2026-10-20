@@ -76,6 +76,20 @@ class Entrenador {
   
   method edad() = edad
   
+  method rolCumple() {
+    if (rol == "estrategaCuantico") {
+      return nivelDePrecisionEstrategica > 80
+    } else {
+      if (rol == "arquitectoDeEnergia") {
+        return self.estaEnSintoniaConEquipo()
+      } else {
+        return rol == "guiaMental"
+      }
+    }
+  }
+  
+  method esEliteGalactico() = (edad > 10) && self.rolCumple()
+  
   method estaEnSintoniaConEquipo() = estaEnSintoniaConEquipo
   
   method nivelDePrecisionEstrategica() = nivelDePrecisionEstrategica
