@@ -285,3 +285,139 @@ describe "Chekpoint 3" {
     assert.that(equipoEterico.esDePrestigioUniversal())
   }
 }
+
+describe "Checkpoint 4" {
+  test "Equipo etérico con 3 portales, fluctuación 80 y 2 tecnologías activas → es de prestigio universal" {
+    const cristian = new Entrenador(
+      edad = 28,
+      estaEnSintoniaConEquipo = true,
+      nivelDePrecisionEstrategica = 94
+    )
+    const armaDePulsares = new TecnologiaEspecial(
+      nombre = "Arma De Pulsares",
+      valorEnergetico = 600,
+      activa = false
+    )
+    
+    const nucleosGravitacionales = new TecnologiaEspecial(
+      nombre = "Nucleos Gravitacionales",
+      valorEnergetico = 230,
+      activa = true
+    )
+    
+    const interfacesDeProyeccionMental = new TecnologiaEspecial(
+      nombre = "Interfaces de proyección mental",
+      valorEnergetico = 350,
+      activa = true
+    )
+    
+    const camarasDeFusionEnergetica = new TecnologiaEspecial(
+      nombre = "Cámaras de fusión energética",
+      valorEnergetico = 420,
+      activa = true
+    )
+    const equipoEterico = new Eterico(
+      nombre = "Eternals",
+      nivelDeEnergiaBase = 3000,
+      entrenador = cristian,
+      tecnologiasComplementarias = #{
+        armaDePulsares,
+        nucleosGravitacionales,
+        interfacesDeProyeccionMental,
+        camarasDeFusionEnergetica
+      },
+      nivelDeFluctuacion = 80,
+      cantDePortalesEnergeticosAbiertos = 3
+    )
+    assert.that(equipoEterico.esDePrestigioUniversal())
+  }
+  
+  test "Verificar que el incremento del 15% se aplica correctamente" {
+    const cristian = new Entrenador(
+      edad = 28,
+      estaEnSintoniaConEquipo = true,
+      nivelDePrecisionEstrategica = 94
+    )
+    const armaDePulsares = new TecnologiaEspecial(
+      nombre = "Arma De Pulsares",
+      valorEnergetico = 600,
+      activa = true
+    )
+    
+    const nucleosGravitacionales = new TecnologiaEspecial(
+      nombre = "Nucleos Gravitacionales",
+      valorEnergetico = 230,
+      activa = true
+    )
+    
+    const interfacesDeProyeccionMental = new TecnologiaEspecial(
+      nombre = "Interfaces de proyección mental",
+      valorEnergetico = 350,
+      activa = true
+    )
+    
+    const camarasDeFusionEnergetica = new TecnologiaEspecial(
+      nombre = "Cámaras de fusión energética",
+      valorEnergetico = 420,
+      activa = false
+    )
+    const equipoEterico = new Eterico(
+      nombre = "Eternals",
+      nivelDeEnergiaBase = 10,
+      entrenador = cristian,
+      tecnologiasComplementarias = #{
+        armaDePulsares,
+        nucleosGravitacionales,
+        interfacesDeProyeccionMental,
+        camarasDeFusionEnergetica
+      },
+      nivelDeFluctuacion = 80,
+      cantDePortalesEnergeticosAbiertos = 3
+    )
+    assert.equals(1368.5, equipoEterico.energiaTotalCalculada())
+  }
+  
+  test "Verificar que un equipo etérico que no cumple las condiciones no suma el 15%" {
+    const cristian = new Entrenador(
+      edad = 5,
+      estaEnSintoniaConEquipo = true,
+      nivelDePrecisionEstrategica = 94
+    )
+    const armaDePulsares = new TecnologiaEspecial(
+      nombre = "Arma De Pulsares",
+      valorEnergetico = 600,
+      activa = false
+    )
+    
+    const nucleosGravitacionales = new TecnologiaEspecial(
+      nombre = "Nucleos Gravitacionales",
+      valorEnergetico = 230,
+      activa = true
+    )
+    
+    const interfacesDeProyeccionMental = new TecnologiaEspecial(
+      nombre = "Interfaces de proyección mental",
+      valorEnergetico = 350,
+      activa = false
+    )
+    
+    const camarasDeFusionEnergetica = new TecnologiaEspecial(
+      nombre = "Cámaras de fusión energética",
+      valorEnergetico = 420,
+      activa = true
+    )
+    const equipoEterico = new Eterico(
+      nombre = "Eternals",
+      nivelDeEnergiaBase = 10,
+      entrenador = cristian,
+      tecnologiasComplementarias = #{
+        armaDePulsares,
+        nucleosGravitacionales,
+        camarasDeFusionEnergetica
+      },
+      nivelDeFluctuacion = 80,
+      cantDePortalesEnergeticosAbiertos = 1
+    )
+    assert.equals(660, equipoEterico.energiaTotalCalculada())
+  }
+}
